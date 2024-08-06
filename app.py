@@ -21,5 +21,3 @@ def cadastrar_usuario():
 @app.route("/cadastrar-animal")
 def cadastrar_animal():
     return render_template("cadastro_animal.html")
-
-#Rotas de cadastrar novo animal e listar animais já cadastrados.
