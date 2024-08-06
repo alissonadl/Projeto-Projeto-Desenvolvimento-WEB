@@ -1,5 +1,20 @@
-{% extends "modelo.html"%}
-{% block conteudo%}
+{%extends "modelo.html"%}
+{%block conteudo%}
 <div>
+    <form action="seu_script_de_processamento.php" method="POST">
+        <label for="nome">Nome do Usuário:</label><br>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="senha">Senha:</label><br>
+        <input type="password" id="senha" name="senha" required><br><br>
+
+        <label for="confirmar_senha">Confirmar Senha:</label><br>
+        <input type="password" id="confirmar_senha" name="confirmar_senha" required><br><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
 </div>
-{% endblock %}
+{%endblock%}

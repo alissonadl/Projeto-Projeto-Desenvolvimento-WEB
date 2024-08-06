@@ -14,4 +14,12 @@ def login():
 def buscar():
     return render_template("buscar.html")
 
+@app.route("/cadastrar-se")
+def cadastrar_usuario():
+    return render_template("cadastro_usuario.html")
+
+@app.route("/cadastrar-animal")
+def cadastrar_animal():
+    return render_template("cadastro_animal.html")
+
 #Rotas de cadastrar novo animal e listar animais já cadastrados.
