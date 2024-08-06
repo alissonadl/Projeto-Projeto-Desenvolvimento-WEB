@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Projeto Desenvolvimento Web</title>
+</head>
+<body>
+    <!----------------------------------------------------------------------------------------------------------------------------------------------->
+    <div>
+        <nav>
+            <a href="{{url_for('inicio')}}">Início</a>
+            <a href="{{url_for('login')}}">Login</a>
+            <a href="{{url_for('cadastro_usuario')}}">Cadastrar-se</a>
+            <a href="{{url_for('buscar')}}">Buscar Animais</a>
+            <a href="{{url_for('cadastro_animal')}}">Cadastrar Animal</a>
+        </nav>
+    </div>
+    <!----------------------------------------------------------------------------------------------------------------------------------------------->
+    {% block conteudo%}
+    {% endblock%}
+    <!----------------------------------------------------------------------------------------------------------------------------------------------->
+        <footer>
+            <p>&copy; 2024 Alisson e Jhonatas. Todos os direitos reservados.</p>
+        </footer>
+    <!----------------------------------------------------------------------------------------------------------------------------------------------->
+</body>
+</html>

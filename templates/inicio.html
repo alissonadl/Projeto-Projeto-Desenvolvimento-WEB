@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <title>Projeto Desenvolvimento Web</title>
-</head>
-<body>
-     <!----------------------------------------------------------------------------------------------------------------------------------------------->
-     <div>
-        <nav>
-            <a href="#">Início</a>
-            <a href="#">Login</a>
-        </nav>
-    </div>
-    <!----------------------------------------------------------------------------------------------------------------------------------------------->
+{% extends "modelo.html"%}
+{% block conteudo%}
+<!----------------------------------------------------------------------------------------------------------------------------------------------->
     <div>
         <p>
             Nosso site foi criado para servir como um banco de informações abrangente e acessível sobre animais vertebrados. Aqui, você encontrará um repositório de dados sobre diversas espécies e inclusive, poderá contribuir também para produzir mais informações.
@@ -26,10 +12,4 @@
     <div>
         <img src="/static/imagens/animais-vertebrados.jpg">
     </div>
-    <!----------------------------------------------------------------------------------------------------------------------------------------------->
-        <footer>
-            <p>&copy; 2024 Alisson e Jhonatas. Todos os direitos reservados.</p>
-        </footer>
-    <!----------------------------------------------------------------------------------------------------------------------------------------------->
-</body>
-</html>
+{% endblock %}
