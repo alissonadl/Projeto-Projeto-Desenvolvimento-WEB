@@ -43,16 +43,17 @@ def cadastrar_animal():
 
 @app.route("/cadastrar-usuario")
 def cadastrar_usuario():
-    add_new_user() #ESSA FUNÇÃO ADICIONA O USUARIO NO BANCO, DA MANEIRA COMO ESTÁ ELE APENAS ADICIONA O USUARIO QUANDO A PÁGINA É EXIBIDA.
-    #Função mostrada abaixo
     return render_template("cadastro_usuario.html")
 
 #Função de cadastrar usuario no banco de dados. {
 #IMPORTANTE: ISSO SERIA O "C" DO C.R.U.D. Ou seja, Create.
+@app.route("/teste_create")
 def add_new_user():
-    novo_usuario = Usuario("Usuario de teste", "email@teste.com","Senha#123")
-    db.session.add(novo_usuario)
+    new_user = Usuario("Usuario de teste", "email@teste.com","Senha#123")
+    db.session.add(new_user)
     db.session.commit()
+    return f"Usuario *{new_user.username}* cadastrado com sucesso!"
+    #Se essa função der erro ao executar, é porque já tem um usuário criado igual. Acesse a rota /teste_delete e tente novamente esta.
 #}
 
 #Função para receber/recuprar dados do banco. {
