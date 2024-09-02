@@ -3,9 +3,13 @@ from database import db
 import os #Biblioteca para ler arquivos como se fosse um "Sistema Operacional".
 from flask_migrate import Migrate
 from usuario import Usuario
+from models.diario import Diario
+from controllers.diario import bp_diario
 
+app = Flask(__name__) #BluePrints
+app.register_blueprint(bp_diario,url_prefix = "/diario")
+#}
 
-app = Flask(__name__)
 #implementando "senha". Necessário para banco de dados; {
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 #}
