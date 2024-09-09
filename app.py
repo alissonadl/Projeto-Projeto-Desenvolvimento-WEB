@@ -51,7 +51,7 @@ def cadastrar_usuario():
 
 #Função de cadastrar usuario no banco de dados. {
 #IMPORTANTE: ISSO SERIA O "C" DO C.R.U.D. Ou seja, Create.
-@app.route("/efetuar_cadastro_usuario")
+@app.route("/teste_create")
 def add_new_user():
     username = request.form.get('username')
     email = request.form.get('email')
