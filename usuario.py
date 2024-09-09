@@ -1,7 +1,7 @@
 from database import db
 
 class Usuario(db.Model):
-    __tablename__="usuario"
+    __tablename__="usuarios"
     username = db.Column(db.String(35),primary_key = True)
     email = db.Column(db.String(50))
     password = db.Column(db.String(30))

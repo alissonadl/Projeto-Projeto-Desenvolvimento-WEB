@@ -3,6 +3,7 @@ from database import db
 import os #Biblioteca para ler arquivos como se fosse um "Sistema Operacional".
 from flask_migrate import Migrate
 from usuario import Usuario
+from animal import Animal
 from models.diario import Diario
 from controllers.diario import bp_diario
 
@@ -75,6 +76,18 @@ def add_new_user():
     #Se essa função der erro ao executar, é porque já tem um usuário criado igual. Acesse a rota /teste_delete e tente novamente esta.
 #}
 
+#Função para cadastrar animal
+@app.route("/efetuar_cadastro_animal", methods=["POST"])
+def add_new_animal():
+    animalname = request.form.get("animalname")
+    animallocalization = request.form.get("animallocalization")
+    animaltype = request.form.get("animaltype")
+
+    new_animal = Animal(animalname = animalname, animallocalization = animallocalization, animaltype = animaltype)
+    db.session.add(new_animal)
+    db.session.commit()
+    return redirect("/cadastro_animal_confirmado")
+
 #Função para receber/recuprar dados do banco. {
 #IMPORTANTE: ISSO SERIA O "R" DO C.R.U.D. Ou seja, Recovery
 @app.route("/teste_recovery")
@@ -110,3 +123,7 @@ def user_delete():
 @app.route("/cadastro_confirmado")
 def cadastro_confirmado():
     return render_template("cadastro_confirmado.html")
+
+@app.route("/cadastro_animal_confirmado")
+def cadastro_animal_confirmado():
+    return render_template("cadastro_animal_confirmado.html")

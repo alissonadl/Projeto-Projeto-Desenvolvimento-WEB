@@ -6,15 +6,15 @@ body {
     padding: 0;
 }
 
+/* Estilo geral para divs */
 div {
     margin: 2vh;
     padding: 2vh;
-    margin-top: 2vh; /* Espaçamento superior de 1% da altura da página */
-    margin-bottom: 2vh; /* Espaçamento inferior de 1% da altura da página */
     border-radius: 3vh;
     background-color: #f3f3f3;
 }
 
+/* Estilo para cabeçalho */
 header {
     text-shadow: 
     1px 1px 0 #ffffff96,
@@ -28,27 +28,30 @@ header {
     border: 1px solid #ffffff;
 }
 
+/* Estilo para navegação */
 nav {
-    display: flex;                /* Configura o contêiner para usar Flexbox */
-    justify-content: space-around; /* Distribui os itens igualmente com espaçamento ao redor */
-    align-items: center;           /* Alinha os itens verticalmente no centro */
-    background-color: #004d00;     /* Cor de fundo da barra de navegação */
-    color: #f5f5f5;                /* Cor do texto dos links */
-    padding: 1%;                 /* Espaçamento interno da barra de navegação */
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a linha seguinte em telas pequenas */
+    justify-content: space-around;
+    align-items: center;
+    background-color: #004d00;
+    color: #f5f5f5;
+    padding: 1%;
 }
 
 nav a {
-    color: #f5f5f5;                /* Cor do texto dos links */
-    padding: 10px 15px;            /* Espaçamento ao redor do texto dos links */
-    text-decoration: none;         /* Remove o sublinhado dos links */
-    display: block;                /* Faz com que o link ocupe um bloco completo (útil para o padding) */
+    color: #f5f5f5;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
 }
 
 nav a:hover {
-    background-color: #003300;     /* Cor de fundo ao passar o mouse sobre o link */
-    border-radius: 5px;            /* Arredondamento das bordas do fundo ao passar o mouse */
+    background-color: #003300;
+    border-radius: 5px;
 }
 
+/* Estilo para rodapé */
 footer {
     background-color: #333;
     color: #f5f5f5;
@@ -59,9 +62,9 @@ footer {
     bottom: 0;
 }
 
-
-
-input[type="text"], input[type="email"], textarea {
+/* Estilo para inputs e textarea */
+input[type="text"], input[type="email"], textarea,
+input[type="password"], select {
     width: 100%;
     padding: 10px;
     margin: 5px 0 15px 0;
@@ -70,19 +73,12 @@ input[type="text"], input[type="email"], textarea {
     box-sizing: border-box;
 }
 
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
+/* Estilo para cabeçalhos */
 h1, h2, h3 {
     color: #004d00;
 }
 
+/* Estilo para botões */
 button {
     background-color: #004d00;
     color: #f5f5f5;
@@ -93,27 +89,61 @@ button {
     cursor: pointer;
 }
 
+/* Estilo para imagens */
 img {
     width: 100%;
-    height: 100%;
+    height: auto; /* Ajusta a altura da imagem proporcionalmente à largura */
     object-fit: cover;
 }
 
-select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    color: #333;
-    font-size: 16px;
-}
-
+/* Estilo para o conteúdo principal */
 .main_content {
-    width: 66%; /* 100% - 12% (esquerda) - 12% (direita) */
-    margin: 0 auto; /* Margens automáticas para centralização horizontal */
+    width: 66%;
+    margin: 0 auto;
 }
 
+/* Consultas de mídia para responsividade */
 
+/* Para dispositivos com largura máxima de 768px (tablets e smartphones em modo paisagem) */
+@media (max-width: 768px) {
+    .main_content {
+        width: 90%; /* Aumenta a largura para 90% da tela */
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    nav {
+        flex-direction: column; /* Muda a direção dos itens da navegação para coluna */
+    }
+
+    nav a {
+        padding: 8px;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+/* Para dispositivos com largura máxima de 480px (smartphones em modo retrato) */
+@media (max-width: 480px) {
+    .main_content {
+        width: 100%; /* Ajusta a largura para 100% da tela */
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    nav a {
+        padding: 6px;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
