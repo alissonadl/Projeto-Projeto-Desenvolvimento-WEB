@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for
 from database import db
 import os #Biblioteca para ler arquivos como se fosse um "Sistema Operacional".
 from flask_migrate import Migrate
@@ -41,19 +41,27 @@ def login():
 def buscar():
     return render_template("buscar.html")
 
-@app.route("/cadastrar-animal")
+@app.route("/cadastro-animal")
 def cadastrar_animal():
     return render_template("cadastro_animal.html")
 
-@app.route("/cadastrar-usuario")
+@app.route("/cadastro-usuario")
 def cadastrar_usuario():
     return render_template("cadastro_usuario.html")
 
 #Função de cadastrar usuario no banco de dados. {
 #IMPORTANTE: ISSO SERIA O "C" DO C.R.U.D. Ou seja, Create.
-@app.route("/teste_create")
+@app.route("/efetuar_cadastro_usuario")
 def add_new_user():
-    new_user = Usuario("Usuario de teste", "email@teste.com","Senha#123")
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+    
+    if password != confirm_password:
+        return "Senhas não coincidem!"
+    
+    new_user = Usuario(username=username, email=email, password=password)
     db.session.add(new_user)
     db.session.commit()
     return f"Usuario *{new_user.username}* cadastrado com sucesso!"
