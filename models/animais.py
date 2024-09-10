@@ -1,4 +1,4 @@
-from database import db
+from utilidades import db
 
 class Animal(db.Model):
     __tablename__="animais"

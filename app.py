@@ -1,13 +1,12 @@
 from flask import Flask, request, render_template, redirect, url_for
-from database import db
+from utilidades import db, lm #Importando bando de dados e login manager.
 import os #Biblioteca para ler arquivos como se fosse um "Sistema Operacional".
 from flask_migrate import Migrate
-from usuario import Usuario
-from animal import Animal
-from models.diario import Diario
+from models.usuarios import Usuario
+from models.animais import Animal
 from controllers.diario import bp_diario
 
-app = Flask(__name__) #BluePrints
+app = Flask(__name__) #BluePrints{
 app.register_blueprint(bp_diario,url_prefix = "/diario")
 #}
 
@@ -15,7 +14,7 @@ app.register_blueprint(bp_diario,url_prefix = "/diario")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 #}
 
-#Importando os dados do falskenv(Arquivo privado){ 
+#"Importando" os dados do falskenv(Arquivo privado){ 
 username = os.getenv("DB_USERNAME")
 password = os.getenv("DB_PASSWORD")
 host = os.getenv("DB_HOST")
@@ -25,7 +24,8 @@ mydb = os.getenv("DB_DATABASE")
 #Criando a conexão o caminho da conexão com o banco de dados {
 conexao = f"mysql+pymysql://{username}:{password}@{host}/{mydb}"
 app.config["SQLALCHEMY_DATABASE_URI"] = conexao
-db.init_app(app)
+db.init_app(app) #Sinalizando que o banco será gerenciado pelo app.
+lm.init_app(app) #Sinalizando que o login manager será gerenciado pelo app.
 migrate = Migrate(app, db)
 #}
 
@@ -40,38 +40,41 @@ def login():
 
 @app.route("/buscar")
 def buscar():
-    return render_template("buscar.html")
-
-@app.route("/cadastro-animal")
-def cadastrar_animal():
-    return render_template("cadastro_animal.html")
+    animais = Animal.query.all()
+    return render_template('buscar.html', animais=animais)
 
 @app.route("/cadastro-usuario")
 def cadastrar_usuario():
     return render_template("cadastro_usuario.html")
 
+@app.route("/cadastro-animal")
+def cadastrar_animal():
+    return render_template("cadastro_animal.html")
+    
+@app.route("/cadastro_usuario_confirmado")
+def cadastro_confirmado():
+    return render_template("cadastro_usuario_confirmado.html")
+
+@app.route("/cadastro_animal_confirmado")
+def cadastro_animal_confirmado():
+    return render_template("cadastro_animal_confirmado.html")
+
 #Função de cadastrar usuario no banco de dados. {
 #IMPORTANTE: ISSO SERIA O "C" DO C.R.U.D. Ou seja, Create.
-@app.route("/efetuar_cadastro", methods=["POST"])
+@app.route("/efetuar_cadastro_usuario", methods=["POST"])
 def add_new_user():
     username = request.form.get('username')
     email = request.form.get('email')
     password = request.form.get('password')
     confirm_password = request.form.get('confirm_password')
-    
-    """
-    if not username or not email or not password:
-        return "Todos os campos são obrigatórios!"
 
-    if password != confirm_password:
-        return "Senhas não coincidem!" """
-    
-        #ADICIONAR OS CAMPOS ACIMA COMO UM POP-UP/MENSAGEM NA TELA, SEM REDIRECINAR
+    #if password != confirm_password:
+        #flash('As senhas não coincidem!')
     
     new_user = Usuario(username=username, email=email, password=password)
     db.session.add(new_user)
     db.session.commit()
-    return redirect("/cadastro_confirmado")
+    return redirect("/cadastro_usuario_confirmado")
 
     #Se essa função der erro ao executar, é porque já tem um usuário criado igual. Acesse a rota /teste_delete e tente novamente esta.
 #}
@@ -119,11 +122,3 @@ def user_delete():
     teste_msg = Usuario.query.all()
     return teste_msg
 #}
-
-@app.route("/cadastro_confirmado")
-def cadastro_confirmado():
-    return render_template("cadastro_confirmado.html")
-
-@app.route("/cadastro_animal_confirmado")
-def cadastro_animal_confirmado():
-    return render_template("cadastro_animal_confirmado.html")

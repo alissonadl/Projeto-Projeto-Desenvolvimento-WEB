@@ -1,4 +1,4 @@
-{%extends "modelo.html"%}
+{%extends "modelo_base.html"%}
 {%block conteudo%}
 <div class = "main_content" >
     <form action="/efetuar_cadastro_animal" method="POST">
@@ -10,11 +10,11 @@
 
         <label for="tipo">Tipo:</label><br>
         <select id="animaltype" name="animaltype" required>
-            <option value="réptil">Réptil</option>
-            <option value="mamífero">Mamífero</option>
-            <option value="ave">Ave</option>
-            <option value="anfíbio">Anfíbio</option>
-            <option value="peixe">Peixe</option>
+            <option value="Réptil">Réptil</option>
+            <option value="Mamífero">Mamífero</option>
+            <option value="Ave">Ave</option>
+            <option value="Anfíbio">Anfíbio</option>
+            <option value="Peixe">Peixe</option>
         </select><br><br>
         <button type="submit">Cadastrar</button>
     </form>

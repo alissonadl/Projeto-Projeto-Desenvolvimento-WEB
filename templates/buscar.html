@@ -1,4 +1,4 @@
-{%extends "modelo.html"%}
+{%extends "modelo_base.html"%}
 {%block conteudo%}
 <!----------------------------------------------------------------------------------------------------------------------------------------------->
 <div class = "main_content" >
@@ -11,6 +11,16 @@
     <h2>Descubra qual a categoria do animal:</h2>
     <input type="text" id="buscaranimal" name="buscaranimal" placeholder="Digite o nome do animal">
     <button>Buscar</button> <!-- Criar e inserir depois a lógica da busca e a função "onclick"-->
+</div><br>
+<div class = "main_content">
+    <h2>Animais já cadastrados:</h2>
+    <ul>
+        {% for animal in animais %}
+            <li>Nome: {{ animal.animalname }}<br>Localização: {{animal.animallocalization}}<br>Tipo: {{ animal.animaltype }}</li><br>
+        {% else %}
+            <li>Nenhum animal encontrado.</li>
+        {% endfor %}
+    </ul>
 </div>
 <!----------------------------------------------------------------------------------------------------------------------------------------------->
 {%endblock%}
