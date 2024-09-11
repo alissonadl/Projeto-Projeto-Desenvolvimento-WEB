@@ -11,3 +11,6 @@ class Usuario(db.Model, UserMixin):
         self.username = username
         self.email = email
         self.password = password
+
+    def get_id(self):
+        return self.username

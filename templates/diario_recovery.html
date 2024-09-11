@@ -1,8 +1,0 @@
-{%extends "modelo_base.html"%}
-{% block conteudo %}
-	<ul>
-	{% for d in dados %}
-		<li>{{d.titulo}} - {{d.disciplina}} (editar | Excluir)</li>
-	{% endfor %}
-	</ul>
-{% endblock %}

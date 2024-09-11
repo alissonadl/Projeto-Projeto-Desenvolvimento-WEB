@@ -1,10 +1,12 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash
 from utilidades import db, lm #Importando bando de dados e login manager.
 import os #Biblioteca para ler arquivos como se fosse um "Sistema Operacional".
 from flask_migrate import Migrate
 from models.usuarios import Usuario
 from models.animais import Animal
 from controllers.diario import bp_diario
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+
 
 app = Flask(__name__) #BluePrints{
 app.register_blueprint(bp_diario,url_prefix = "/diario")
@@ -29,14 +31,40 @@ lm.init_app(app) #Sinalizando que o login manager será gerenciado pelo app.
 migrate = Migrate(app, db)
 #}
 
+#TESTE {
+@lm.user_loader
+def load_user(username):
+    return Usuario.query.filter_by(username=username).first()
+#}
+
 #rotas {
 @app.route("/") #Página raíz.
 def inicio():
     return render_template("inicio.html")
 
-@app.route("/login")
+
+@app.route("/inicio_logado")
+@login_required
+def inicio_logado():
+    return render_template("inicio_logado.html")
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        # Verificar se o usuário existe no banco de dados
+        user = Usuario.query.filter_by(username=username).first()
+
+        if user and (user.password, password):
+            login_user(user)
+            return redirect(url_for("inicio_logado"))
+        else:
+            return ("Dados incorretos, tente novamente.")
+
     return render_template("login.html")
+    
 
 @app.route("/buscar")
 def buscar():
@@ -48,6 +76,7 @@ def cadastrar_usuario():
     return render_template("cadastro_usuario.html")
 
 @app.route("/cadastro-animal")
+@login_required
 def cadastrar_animal():
     return render_template("cadastro_animal.html")
     
@@ -56,6 +85,7 @@ def cadastro_confirmado():
     return render_template("cadastro_usuario_confirmado.html")
 
 @app.route("/cadastro_animal_confirmado")
+@login_required
 def cadastro_animal_confirmado():
     return render_template("cadastro_animal_confirmado.html")
 

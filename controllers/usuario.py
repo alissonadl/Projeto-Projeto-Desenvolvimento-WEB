@@ -4,7 +4,6 @@ from models.usuarios import Usuario
 from flask import Blueprint
 from flask_login import login_user
 
-
 bp_usuario = Blueprint("usuario", __name__, template_folder='templates')
 
 @bp_usuario.route('/create', methods=['GET', 'POST'])
