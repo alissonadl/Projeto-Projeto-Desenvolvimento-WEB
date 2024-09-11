@@ -79,7 +79,6 @@ def logout():
 def erro401(error):
     return render_template('erro401.html'), 401
 #}
-    
 
 @app.route("/buscar")
 @login_required
@@ -150,12 +149,30 @@ def update_user():
     return teste_msg
 #}
 
-@app.route("/alterar_senha")
+#Função para receber/recuprar dados do banco. {
+#IMPORTANTE: ISSO SERIA O "R" DO C.R.U.D. Ou seja, Recovery
+@app.route("/alterar_senha", methods=["GET", "POST"])
 @login_required
 def alterar_senha():
-    current_password = request.form.get('current_password')
-    new_password = request.form.get('new_password')
-    confirm_password = request.form.get('confirm_password')
+    if request.method == "POST":
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        user = Usuario.query.get(current_user.username) #Busca o usuário atual no banco de dados
+        
+        if user and user.password == current_password:
+            if new_password == confirm_password:
+                user.password = new_password
+                db.session.commit()
+                msg = ("Senha alterada com sucesso!")
+                return render_template("aviso_alterar_senha.html", msg = msg)
+            else:
+                msg = ("A nova senha e a confirmação não coincidem!")
+                return render_template("aviso_alterar_senha.html", msg = msg)
+        else:
+            msg = ("Senha atual incorreta!")
+            return render_template("aviso_alterar_senha.html", msg = msg)
 
     return render_template("alterar_senha.html")
 
@@ -172,13 +189,4 @@ def excluir_animal(animalname):
     else:
         flash('Animal não encontrado!')
     return redirect(url_for('buscar'))
-#}
-
-#Função para receber/recuprar dados do banco. {
-#IMPORTANTE: ISSO SERIA O "R" DO C.R.U.D. Ou seja, Recovery
-#@app.route("/teste_recovery")
-#def recovery_user():
-#    user = Usuario.query.get("email@teste.com")#Precisa informar a primary key da tupla. Isso recebe os dados da tupla para essa variável.
-#    teste_msg = f"{user.username}, {user.email}"
-#    return teste_msg
 #}

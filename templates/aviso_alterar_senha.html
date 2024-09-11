@@ -1,0 +1,11 @@
+{% extends "modelo_base_logado.html" %}
+{% block conteudo %}
+
+<div class="main_content">
+    <h2>{{ msg }}</h2>
+    {% if msg == "Senha atual incorreta!" or msg == "A nova senha e a confirmação não coincidem!" %}
+        <h2>Para tentar novamente <a href="{{ url_for('alterar_senha') }}">clique aqui</a>.</h2>
+    {% endif %}
+</div>
+
+{%endblock%}
