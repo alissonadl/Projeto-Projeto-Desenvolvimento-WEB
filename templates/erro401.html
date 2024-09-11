@@ -1,0 +1,8 @@
+{% extends "modelo_base.html" %}
+{% block conteudo %}
+<div>
+    <h2 class="main_content">Para acessar a página que você solicitou, é necessário realizar o login primeiro.</h2>
+    <h2 class="main_content">
+        Para realizar o login, <a href="{{ url_for('login') }}">clique aqui</a>.
+</div>
+{% endblock %}

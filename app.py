@@ -37,16 +37,16 @@ def load_user(username):
     return Usuario.query.filter_by(username=username).first()
 #}
 
-#rotas {
+#rotas
 @app.route("/") #Página raíz.
 def inicio():
     return render_template("inicio.html")
-
 
 @app.route("/inicio_logado")
 @login_required
 def inicio_logado():
     return render_template("inicio_logado.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -59,11 +59,26 @@ def login():
 
         if user and (user.password, password):
             login_user(user)
+
             return redirect(url_for("inicio_logado"))
         else:
             return ("Dados incorretos, tente novamente.")
 
     return render_template("login.html")
+
+#Função de logout/logoff {
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+#}
+
+#Pagina do error 401 (Não autorizado, login não feito){
+@app.errorhandler(401)
+def erro401(error):
+    return render_template('erro401.html'), 401
+#}
     
 
 @app.route("/buscar")
@@ -151,4 +166,10 @@ def user_delete():
     db.session.commit() #Dá commit no banco, efetivando as modificações
     teste_msg = Usuario.query.all()
     return teste_msg
+#}
+
+# Busca o usuário no banco de dados pelo username{
+def ver_usuario():
+    usuario_logado = current_user.username
+    return usuario_logado
 #}
