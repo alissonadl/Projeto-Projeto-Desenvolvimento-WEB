@@ -12,10 +12,16 @@
     <h2>Animais já cadastrados:</h2>
     <ul>
         {% for animal in animais %}
-            <li>Nome: {{ animal.animalname }}<br>Localização: {{ animal.animallocalization }}<br>Tipo: {{ animal.animaltype }}</li><br>
-        {% else %}
-            <li>Nenhum animal encontrado.</li>
-        {% endfor %}
+        <li>
+            Nome: {{ animal.animalname }}<br>
+            Localização: {{ animal.animallocalization }}<br>
+            Tipo: {{ animal.animaltype }}<br>
+            <a href="{{ url_for('excluir_animal', animalname=animal.animalname) }}">Excluir</a>
+        </li>
+        <br>
+    {% else %}
+        <p>Nenhum animal catalogado ainda.</p>
+    {% endfor %}
     </ul>
 </div>
 

@@ -82,6 +82,7 @@ def erro401(error):
     
 
 @app.route("/buscar")
+@login_required
 def buscar():
     animais = Animal.query.all()
     return render_template('buscar.html', animais=animais)
@@ -90,14 +91,14 @@ def buscar():
 def cadastrar_usuario():
     return render_template("cadastro_usuario.html")
 
+@app.route("/cadastro_usuario_confirmado")
+def cadastro_confirmado():
+    return render_template("cadastro_usuario_confirmado.html")
+
 @app.route("/cadastro-animal")
 @login_required
 def cadastrar_animal():
     return render_template("cadastro_animal.html")
-    
-@app.route("/cadastro_usuario_confirmado")
-def cadastro_confirmado():
-    return render_template("cadastro_usuario_confirmado.html")
 
 @app.route("/cadastro_animal_confirmado")
 @login_required
@@ -113,19 +114,20 @@ def add_new_user():
     password = request.form.get('password')
     confirm_password = request.form.get('confirm_password')
 
-    #if password != confirm_password:
-        #flash('As senhas não coincidem!')
-    
-    new_user = Usuario(username=username, email=email, password=password)
-    db.session.add(new_user)
-    db.session.commit()
-    return redirect("/cadastro_usuario_confirmado")
+    if(password == confirm_password):
+        new_user = Usuario(username=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit() 
+        return redirect("/cadastro_usuario_confirmado")
+    else:
+        return render_template("falha_cadastro.html")
 
     #Se essa função der erro ao executar, é porque já tem um usuário criado igual. Acesse a rota /teste_delete e tente novamente esta.
 #}
 
 #Função para cadastrar animal
 @app.route("/efetuar_cadastro_animal", methods=["POST"])
+@login_required
 def add_new_animal():
     animalname = request.form.get("animalname")
     animallocalization = request.form.get("animallocalization")
@@ -135,15 +137,6 @@ def add_new_animal():
     db.session.add(new_animal)
     db.session.commit()
     return redirect("/cadastro_animal_confirmado")
-
-#Função para receber/recuprar dados do banco. {
-#IMPORTANTE: ISSO SERIA O "R" DO C.R.U.D. Ou seja, Recovery
-@app.route("/teste_recovery")
-def recovery_user():
-    user = Usuario.query.get("email@teste.com")#Precisa informar a primary key da tupla. Isso recebe os dados da tupla para essa variável.
-    teste_msg = f"{user.username}, {user.email}"
-    return teste_msg
-#}
 
 #Função para atualizar informações do banco. {
 #IMPORTANTE: ISSO SERIA O "U" DO C.R.U.D. Ou seja, Update
@@ -157,19 +150,35 @@ def update_user():
     return teste_msg
 #}
 
+@app.route("/alterar_senha")
+@login_required
+def alterar_senha():
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+
+    return render_template("alterar_senha.html")
+
 #Função para deletar informações do banco. {
 #IMPORTANTE: ISSO SERIA O "D" DO C.R.U.D. Ou seja, Delete
-@app.route("/teste_delete")
-def user_delete():
-    user = Usuario.query.get("Alisson")#Precisa informar a primary key da tupla. Isso recebe os dados da tupla para essa variável.
-    db.session.delete(user) #Remove a tupla do banco
-    db.session.commit() #Dá commit no banco, efetivando as modificações
-    teste_msg = Usuario.query.all()
-    return teste_msg
+@app.route("/excluir_animal/<string:animalname>")
+@login_required
+def excluir_animal(animalname):
+    animal = Animal.query.get(animalname)
+    if animal:
+        db.session.delete(animal)
+        db.session.commit()
+        flash('Animal excluído com sucesso!')
+    else:
+        flash('Animal não encontrado!')
+    return redirect(url_for('buscar'))
 #}
 
-# Busca o usuário no banco de dados pelo username{
-def ver_usuario():
-    usuario_logado = current_user.username
-    return usuario_logado
+#Função para receber/recuprar dados do banco. {
+#IMPORTANTE: ISSO SERIA O "R" DO C.R.U.D. Ou seja, Recovery
+#@app.route("/teste_recovery")
+#def recovery_user():
+#    user = Usuario.query.get("email@teste.com")#Precisa informar a primary key da tupla. Isso recebe os dados da tupla para essa variável.
+#    teste_msg = f"{user.username}, {user.email}"
+#    return teste_msg
 #}
