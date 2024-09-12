@@ -31,11 +31,9 @@ lm.init_app(app) #Sinalizando que o login manager será gerenciado pelo app.
 migrate = Migrate(app, db)
 #}
 
-#TESTE {
 @lm.user_loader
 def load_user(username):
     return Usuario.query.filter_by(username=username).first()
-#}
 
 #rotas
 @app.route("/") #Página raíz.
