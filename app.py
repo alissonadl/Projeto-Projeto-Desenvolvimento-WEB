@@ -82,6 +82,12 @@ def erro401(error):
     return render_template('erro401.html'), 401
 #}
 
+#Pagina do error 404 (Página não existe){
+@app.errorhandler(404)
+def erro401(error):
+    return render_template('erro404.html'), 404
+#}
+
 @app.route("/buscar")
 @login_required
 def buscar():
