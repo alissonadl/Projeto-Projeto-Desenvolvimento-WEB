@@ -198,3 +198,27 @@ def excluir_animal(animalname):
         flash('Animal não encontrado!')
     return redirect(url_for('buscar'))
 #}
+
+@app.route("/editar_animal/<string:animalname>", methods=["GET", "POST"])
+@login_required
+def editar_animal(animalname):
+    animal = Animal.query.filter_by(animalname=animalname).first()
+    if not animal:
+        flash('Animal não encontrado!')
+        return redirect(url_for('buscar'))
+
+    if request.method == "POST":
+        animalname = request.form.get("animalname")
+        animallocalization = request.form.get("animallocalization")
+        animaltype = request.form.get("animaltype")
+
+        # Atualiza os dados do animal
+        animal.animalname = animalname
+        animal.animallocalization = animallocalization
+        animal.animaltype = animaltype
+
+        db.session.commit()
+        flash('Animal atualizado com sucesso!')
+        return redirect(url_for('buscar'))
+
+    return render_template("editar_animal.html", animal=animal)

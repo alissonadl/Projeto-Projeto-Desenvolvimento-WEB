@@ -1,7 +1,6 @@
 {% extends "modelo_base_logado.html" %}
-{% block conteudo %}
-<br>
 
+{% block conteudo %}
 <div class="main_content">
     <h2>Animais já cadastrados:</h2>
     <ul>
@@ -10,13 +9,13 @@
             Nome: {{ animal.animalname }}<br>
             Localização: {{ animal.animallocalization }}<br>
             Tipo: {{ animal.animaltype }}<br>
+            <a href="{{ url_for('editar_animal', animalname=animal.animalname) }}">Editar</a> | 
             <a href="{{ url_for('excluir_animal', animalname=animal.animalname) }}">Excluir</a>
         </li>
         <br>
-    {% else %}
+        {% else %}
         <p>Nenhum animal catalogado ainda.</p>
-    {% endfor %}
+        {% endfor %}
     </ul>
 </div>
-
 {% endblock %}
