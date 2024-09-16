@@ -60,9 +60,13 @@ def login():
 
             return redirect(url_for("inicio_logado"))
         else:
-            return ("Dados incorretos, tente novamente.")
+            return redirect(url_for("login_falhou"))
 
     return render_template("login.html")
+
+@app.route("/login_falhou")
+def login_falhou():
+    return render_template("login_falhou.html")
 
 #Função de logout/logoff {
 @app.route("/logout")
