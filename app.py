@@ -4,12 +4,12 @@ import os #Biblioteca para ler arquivos como se fosse um "Sistema Operacional".
 from flask_migrate import Migrate
 from models.usuarios import Usuario
 from models.animais import Animal
-from controllers.diario import bp_diario
+from controllers.bp_login import bp_login
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
 
 app = Flask(__name__) #BluePrints{
-app.register_blueprint(bp_diario,url_prefix = "/diario")
+app.register_blueprint(bp_login,url_prefix = "/bp_login")
 #}
 
 #implementando "senha". Necessário para banco de dados; {
@@ -55,7 +55,7 @@ def login():
         # Verificar se o usuário existe no banco de dados
         user = Usuario.query.filter_by(username=username).first()
 
-        if user and (user.password, password):
+        if user and user.password == password:
             login_user(user)
 
             return redirect(url_for("inicio_logado"))
