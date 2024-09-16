@@ -147,3 +147,9 @@ img {
         font-size: 12px;
     }
 }
+
+.contorno-arredondado {
+    border: 1px solid #004d00;
+    border-radius: 5px;
+    padding: 10px;
+}
