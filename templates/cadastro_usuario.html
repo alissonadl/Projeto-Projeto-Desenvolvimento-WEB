@@ -4,16 +4,16 @@
 <div class = "main_content" >
     <form action="/efetuar_cadastro_usuario" method="post">
         <label for="nome">Nome do Usuário:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
+        <input type="text" id="username" name="username" required maxlength="35"><br><br>
 
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="email" id="email" name="email" required maxlength="50"><br><br>
 
         <label for="senha">Senha:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" required maxlength="30"><br><br>
 
         <label for="confirmar_senha">Confirmar Senha:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+        <input type="password" id="confirm_password" name="confirm_password" required maxlength="30"><br><br>
 
         <button type="submit">Cadastrar</button>
     </form>
